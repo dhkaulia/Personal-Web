@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JUKI AKIRA — Design · Gaming · Music</title>
+  <meta name="description" content="Juki Akira's personal profile hub — a centralized digital identity for design, gaming, and music. Explore the current setup, visit the Yakshop store, and discover creative projects.">
+  <meta property="og:title" content="JUKI AKIRA — Design · Gaming · Music">
+  <meta property="og:description" content="A premium digital identity hub. Design, gaming peripherals, music, and more.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="JUKI AKIRA — Design · Gaming · Music">
+  <meta name="twitter:description" content="A premium digital identity hub. Design, gaming peripherals, music, and more.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'sans': ['Inter', 'Helvetica Neue', 'Arial', 'sans-serif'],
+          },
+          colors: {
+            'primary': '#000000',
+            'surface': '#ffffff',
+            'muted': '#737373',
+            'border': '#e5e5e5',
+            'hover': '#f5f5f5',
+          },
+          letterSpacing: {
+            'widest-xl': '0.2em',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* ===== GLOBAL RESET & BASE ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      overflow-x: hidden;
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #ffffff;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #d4d4d4;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #a3a3a3;
+    }
+
+    /* ===== ANNOUNCEMENT BAR MARQUEE ===== */
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-track {
+      animation: marquee 30s linear infinite;
+    }
+    .marquee-track:hover {
+      animation-play-state: paused;
+    }
+
+    /* ===== HERO PARALLAX ===== */
+    .hero-banner {
+      transition: transform 0.1s ease-out;
+    }
+
+    /* ===== GEAR CARD IMAGE ZOOM ===== */
+    .gear-card img {
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .gear-card:hover img {
+      transform: scale(1.05);
+    }
+
+    /* ===== LINK BUTTON INVERSION ===== */
+    .link-btn {
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .link-btn:hover {
+      background-color: #000000 !important;
+      color: #ffffff !important;
+      border-color: #000000 !important;
+    }
+
+    /* ===== NAV LINK UNDERLINE ANIMATION ===== */
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background-color: #000000;
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* ===== FADE IN ANIMATION ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .animate-fade-in-up {
+      opacity: 0;
+      animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* ===== STAGGER DELAYS ===== */
+    .delay-100 { animation-delay: 0.1s; }
+    .delay-200 { animation-delay: 0.2s; }
+    .delay-300 { animation-delay: 0.3s; }
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-500 { animation-delay: 0.5s; }
+    .delay-600 { animation-delay: 0.6s; }
+    .delay-700 { animation-delay: 0.7s; }
+    .delay-800 { animation-delay: 0.8s; }
+
+    /* ===== SECTION DIVIDERS ===== */
+    .section-divider {
+      height: 1px;
+      background-color: #e5e5e5;
+    }
+
+    /* ===== MOBILE MENU ===== */
+    .mobile-menu {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mobile-menu.open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    /* ===== SPEC ROW HOVER ===== */
+    .spec-row {
+      transition: background-color 0.2s ease;
+    }
+    .spec-row:hover {
+      background-color: #fafafa;
+    }
+
+    /* ===== SOCIAL ICON HOVER ===== */
+    .social-icon {
+      transition: all 0.2s ease;
+    }
+    .social-icon:hover {
+      background-color: #000000;
+      color: #ffffff;
+    }
+
+    /* ===== GEAR CARD LABEL SLIDE ===== */
+    .gear-label {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .gear-card:hover .gear-label {
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== ANNOUNCEMENT BAR ===== -->
+  <div id="announcement-bar" class="bg-black text-white overflow-hidden">
+    <div class="flex items-center h-8">
+      <div class="marquee-track flex items-center whitespace-nowrap">
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Competitive Gaming · Streaming · VTuber</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">✦</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Yakshop — Now Open</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">✦</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Current Setup — Season 2026</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">✦</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Song Covers — New Drops</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">✦</span>
+        <!-- Duplicate for seamless loop -->
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Competitive Gaming · Streaming · VTuber</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">✦</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Yakshop — Now Open</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">✦</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Current Setup — Season 2026</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">✦</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Song Covers — New Drops</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">✦</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HEADER / NAVIGATION ===== -->
+  <header id="site-header" class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border">
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+      <div class="flex items-center justify-between h-14">
+        <!-- Logo / Monogram -->
+        <a href="#" id="logo" class="flex items-center gap-2">
+          <span class="text-sm font-bold tracking-[0.15em] uppercase">JA</span>
+          <span class="hidden sm:inline text-[10px] tracking-[0.1em] uppercase text-muted font-medium">/ Juki Akira</span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav id="desktop-nav" class="hidden md:flex items-center gap-8">
+          <a href="#setup" class="nav-link text-[11px] tracking-[0.15em] uppercase font-medium">Setup</a>
+          <a href="#specs" class="nav-link text-[11px] tracking-[0.15em] uppercase font-medium">Specs</a>
+          <a href="#links" class="nav-link text-[11px] tracking-[0.15em] uppercase font-medium">Links</a>
+          <a href="#contact" class="nav-link text-[11px] tracking-[0.15em] uppercase font-medium">Contact</a>
+        </nav>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-toggle" class="md:hidden flex flex-col gap-[5px] p-2 -mr-2" aria-label="Toggle menu">
+          <span class="block w-5 h-[1.5px] bg-black transition-all duration-300 origin-center" id="menu-line-1"></span>
+          <span class="block w-5 h-[1.5px] bg-black transition-all duration-300" id="menu-line-2"></span>
+          <span class="block w-5 h-[1.5px] bg-black transition-all duration-300 origin-center" id="menu-line-3"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu absolute top-full left-0 right-0 bg-white border-b border-border md:hidden z-40">
+      <div class="px-6 py-8 flex flex-col gap-6">
+        <a href="#setup" class="text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link">Setup</a>
+        <a href="#specs" class="text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link">Specs</a>
+        <a href="#links" class="text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link">Links</a>
+        <a href="#contact" class="text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ===== HERO SECTION ===== -->
+    <section id="hero" class="relative w-full overflow-hidden">
+      <div class="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[70vh]">
+        <img
+          src="assets/images/hero-banner.webp"
+          alt="Juki Akira — Collaboration Banner"
+          class="hero-banner w-full h-full object-cover"
+          id="hero-image"
+        >
+        <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent"></div>
+      </div>
+    </section>
+
+    <!-- ===== PROFILE SECTION ===== -->
+    <section id="profile" class="relative pt-12 z-10">
+      <div class="max-w-[800px] mx-auto px-6 lg:px-10 text-center">
+        <!-- Avatar / Monogram -->
+        <div class="animate-fade-in-up delay-100">
+          <div class="w-20 h-20 mx-auto bg-black text-white flex items-center justify-center text-lg font-bold tracking-[0.1em] mb-6">
+            JA
+          </div>
+        </div>
+
+        <!-- Name & Tagline -->
+        <div class="animate-fade-in-up delay-200">
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-3">
+            JUKI AKIRA
+          </h1>
+        </div>
+        <div class="animate-fade-in-up delay-300">
+          <p class="text-[11px] tracking-[0.2em] uppercase text-muted font-medium mb-4">
+            Design · Gaming · Music
+          </p>
+        </div>
+        <div class="animate-fade-in-up delay-400">
+          <p class="text-sm text-muted max-w-md mx-auto leading-relaxed mb-8">
+            I play to win. VTuber. Streamer. Vocalist. Welcome.
+          </p>
+        </div>
+
+        <!-- Quick Social Row -->
+        <div class="animate-fade-in-up delay-500 flex items-center justify-center gap-3 mb-12">
+          <a href="https://instagram.com/dhkaulia" target="_blank" rel="noopener noreferrer" class="social-icon w-9 h-9 border border-border flex items-center justify-center text-muted" aria-label="Instagram" title="Instagram">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://x.com/dhkaulia" target="_blank" rel="noopener noreferrer" class="social-icon w-9 h-9 border border-border flex items-center justify-center text-muted" aria-label="Twitter / X" title="Twitter / X">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+          </a>
+          <a href="https://youtube.com/@jukiiakira" target="_blank" rel="noopener noreferrer" class="social-icon w-9 h-9 border border-border flex items-center justify-center text-muted" aria-label="YouTube" title="YouTube">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19.13C5.12 19.56 12 19.56 12 19.56s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+          </a>
+          <a href="http://tiktok.com/@jukiakiraa" target="_blank" rel="noopener noreferrer" class="social-icon w-9 h-9 border border-border flex items-center justify-center text-muted" aria-label="TikTok" title="TikTok">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V9.67a8.16 8.16 0 0 0 4.77 1.52V7.79a4.85 4.85 0 0 1-1.01-.1z"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LINK DIRECTORY ===== -->
+    <section id="links" class="py-6">
+      <div class="max-w-[520px] mx-auto px-6">
+        <!-- Section Label -->
+        <div class="animate-fade-in-up delay-100">
+          <p class="text-[10px] tracking-[0.2em] uppercase text-muted font-medium text-center mb-6">Quick Links</p>
+        </div>
+
+        <div class="flex flex-col gap-3">
+
+
+          <!-- Discord Button -->
+          <a href="https://discord.gg/8vVaedQ4Af" target="_blank" rel="noopener noreferrer" id="link-discord" class="link-btn block w-full border border-black py-3.5 px-5 text-center text-xs tracking-[0.12em] uppercase font-semibold animate-fade-in-up delay-450">
+            Join Juki's Official Discord Server
+          </a>
+
+          <!-- Donation / VIP Button -->
+          <a href="https://sociabuzz.com/jukiakiraa/tribe" target="_blank" rel="noopener noreferrer" id="link-donation" class="link-btn block w-full border border-black py-3.5 px-5 text-center text-xs tracking-[0.12em] uppercase font-semibold animate-fade-in-up delay-500">
+            mau donasi atau join mabar vip? click disini
+          </a>
+
+          <!-- WhatsApp Channel Button -->
+          <a href="https://whatsapp.com/channel/0029VbCeIu6DTkJzsQMW7J3B" target="_blank" rel="noopener noreferrer" id="link-whatsapp" class="link-btn block w-full border border-black py-3.5 px-5 text-center text-xs tracking-[0.12em] uppercase font-semibold animate-fade-in-up delay-525">
+            mau join whatsapp channel? Click disini
+          </a>
+
+          <!-- Contact / Collab -->
+          <a href="#contact" id="link-contact" class="link-btn block w-full border border-border text-muted py-3.5 px-5 text-center text-xs tracking-[0.12em] uppercase font-medium animate-fade-in-up delay-550">
+            Contact / Collaborate
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== STREAM SCHEDULE ===== -->
+    <section id="schedule" class="py-6">
+      <div class="max-w-[520px] mx-auto px-6">
+        <!-- Section Label -->
+        <div class="animate-fade-in-up">
+          <p class="text-[10px] tracking-[0.2em] uppercase text-muted font-medium text-center mb-6">Broadcast Schedule</p>
+        </div>
+
+        <!-- Schedule Table -->
+        <div class="border border-black bg-white divide-y divide-black animate-fade-in-up">
+          <div class="flex items-center justify-between px-5 py-4">
+            <div class="flex flex-col">
+              <span class="text-xs font-black tracking-wider uppercase">MON - SUN</span>
+              <span class="text-[9px] text-muted tracking-[0.2em] uppercase mt-1">20:00 WIB / 13:00 UTC</span>
+            </div>
+            <div class="text-right">
+              <span class="text-xs font-bold tracking-tight uppercase">LIVE (ALMOST) EVERYDAY ON TIKTOK</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DIVIDER ===== -->
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 py-12">
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- ===== CURRENT SETUP — GEAR SHOWCASE ===== -->
+    <section id="setup" class="pb-16">
+      <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+        <!-- Section Header -->
+        <div class="flex items-end justify-between mb-10">
+          <div>
+            <p class="text-[10px] tracking-[0.2em] uppercase text-muted font-medium mb-2">Current Setup</p>
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Season 2026</h2>
+          </div>
+          <p class="hidden sm:block text-[10px] tracking-[0.15em] uppercase text-muted font-medium">4 Items</p>
+        </div>
+
+        <!-- Product Grid — E-commerce "New Releases" Style -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[1px] bg-border">
+
+          <!-- Gear Item 1: BenQ GW2791 -->
+          <article class="gear-card bg-white cursor-pointer group" id="gear-monitor">
+            <div class="overflow-hidden aspect-square bg-[#fafafa]">
+              <img
+                src="assets/images/benq-gw2791.webp"
+                alt="BenQ GW2791 27-inch Monitor"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              >
+            </div>
+            <div class="p-4 border-t border-border">
+              <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Primary Display</p>
+              <h3 class="gear-label text-sm font-semibold tracking-tight">BenQ GW2791</h3>
+            </div>
+          </article>
+
+          <!-- Gear Item 2: Pressplay Essentials 75 -->
+          <article class="gear-card bg-white cursor-pointer group" id="gear-keyboard">
+            <div class="overflow-hidden aspect-square bg-[#fafafa]">
+              <img
+                src="assets/images/pressplay-essentials-75.webp"
+                alt="Pressplay Essentials 75 Mechanical Keyboard"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              >
+            </div>
+            <div class="p-4 border-t border-border">
+              <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Keyboard</p>
+              <h3 class="gear-label text-sm font-semibold tracking-tight">Pressplay Essentials 75</h3>
+            </div>
+          </article>
+
+          <!-- Gear Item 3: ATK R1 Pro -->
+          <article class="gear-card bg-white cursor-pointer group" id="gear-mouse">
+            <div class="overflow-hidden aspect-square bg-[#fafafa]">
+              <img
+                src="assets/images/atk-r1-pro.webp"
+                alt="ATK R1 Pro Gaming Mouse"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              >
+            </div>
+            <div class="p-4 border-t border-border">
+              <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Mouse</p>
+              <h3 class="gear-label text-sm font-semibold tracking-tight">ATK R1 Pro</h3>
+            </div>
+          </article>
+
+          <!-- Gear Item 4: KANSHA by Tenjin Scrollworks -->
+          <article class="gear-card bg-white cursor-pointer group" id="gear-deskmat">
+            <div class="overflow-hidden aspect-square bg-[#fafafa]">
+              <img
+                src="assets/images/tenjin-kansha.webp"
+                alt="KANSHA by Tenjin Scrollworks Deskmat"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              >
+            </div>
+            <div class="p-4 border-t border-border">
+              <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Deskmat</p>
+              <h3 class="gear-label text-sm font-semibold tracking-tight">KANSHA by Tenjin Scrollworks</h3>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DIVIDER ===== -->
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 pb-12">
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- ===== SPECS & SETTINGS ===== -->
+    <section id="specs" class="pb-20">
+      <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          
+          <!-- Column 1: Hardware Specifications -->
+          <div>
+            <!-- Section Header -->
+            <div class="mb-10">
+              <p class="text-[10px] tracking-[0.2em] uppercase text-muted font-medium mb-2">Hardware</p>
+              <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">System Specifications</h2>
+            </div>
+
+            <!-- Spec Table -->
+            <div class="border border-border">
+              <!-- Machine -->
+              <div class="spec-row flex items-center border-b border-border">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">Machine</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">Axioo Hype 7</p>
+                </div>
+              </div>
+
+              <!-- CPU -->
+              <div class="spec-row flex items-center border-b border-border">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">CPU</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">AMD Ryzen 7 5825U</p>
+                </div>
+              </div>
+
+              <!-- GPU -->
+              <div class="spec-row flex items-center border-b border-border">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">GPU</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">AMD Radeon Vega 8</p>
+                </div>
+              </div>
+
+              <!-- Memory -->
+              <div class="spec-row flex items-center border-b border-border">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">Memory</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">32GB DDR4 3200MHz</p>
+                  <p class="text-[10px] text-muted mt-0.5">Configured to 27GB usable</p>
+                </div>
+              </div>
+
+              <!-- Storage -->
+              <div class="spec-row flex items-center">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">Storage</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">512GB NVMe + 1TB External</p>
+                  <p class="text-[10px] text-muted mt-0.5">Internal SSD + USB 3.0 External</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Game Settings -->
+          <div>
+            <!-- Section Header -->
+            <div class="mb-10">
+              <p class="text-[10px] tracking-[0.2em] uppercase text-muted font-medium mb-2">Sensitivity & Config</p>
+              <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Game Settings</h2>
+            </div>
+
+            <!-- Game Tabs -->
+            <div class="flex border-b border-border mb-6 overflow-x-auto whitespace-nowrap scrollbar-none">
+              <button data-game-tab="valorant" class="game-tab-btn px-4 py-2 border-b-2 border-black text-[10px] tracking-[0.2em] font-bold uppercase transition-all duration-200">Valorant</button>
+              <button data-game-tab="bloodstrike" class="game-tab-btn px-4 py-2 border-b-2 border-transparent text-[10px] tracking-[0.2em] font-bold uppercase text-muted hover:text-black transition-all duration-200">Bloodstrike</button>
+            </div>
+
+            <!-- Settings Table (Valorant) -->
+            <div id="settings-valorant" class="game-settings-table border border-border">
+              <!-- Resolution -->
+              <div class="spec-row flex items-center border-b border-border">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">Resolution</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">1280x1024 <span class="text-[10px] text-muted font-normal ml-1">4:3 Stretched</span></p>
+                  <p class="text-[10px] text-muted mt-0.5">100Hz Refresh Rate</p>
+                </div>
+              </div>
+
+              <!-- Graphics -->
+              <div class="spec-row flex items-center border-b border-border">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">Graphics</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">Everything on LOW</p>
+                  <p class="text-[10px] text-muted mt-0.5">Bloom Enabled</p>
+                </div>
+              </div>
+
+              <!-- DPI -->
+              <div class="spec-row flex items-center border-b border-border">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">Mouse DPI</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">1600 DPI</p>
+                </div>
+              </div>
+
+              <!-- Sensitivity -->
+              <div class="spec-row flex items-center border-b border-border">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">In-Game Sens</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">0.23</p>
+                  <p class="text-[10px] text-muted mt-0.5">eDPI: 368</p>
+                </div>
+              </div>
+
+              <!-- ADS Multiplier -->
+              <div class="spec-row flex items-center">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">ADS Multiplier</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">1.0</p>
+                  <p class="text-[10px] text-muted mt-0.5">Scope Sensitivity Multiplier</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Settings Table (Bloodstrike) -->
+            <div id="settings-bloodstrike" class="game-settings-table border border-border hidden">
+              <!-- Resolution -->
+              <div class="spec-row flex items-center border-b border-border">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">Resolution</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">1080x1080 <span class="text-[10px] text-muted font-normal ml-1">1:1 Aspect Ratio</span></p>
+                  <p class="text-[10px] text-muted mt-0.5">Competitive Custom Resolution</p>
+                </div>
+              </div>
+
+              <!-- Graphics -->
+              <div class="spec-row flex items-center border-b border-border">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">Graphics</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">High Settings</p>
+                  <p class="text-[10px] text-muted mt-0.5">Ultra FPS (Vulkan API Enabled)</p>
+                </div>
+              </div>
+
+              <!-- DPI -->
+              <div class="spec-row flex items-center border-b border-border">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">Mouse DPI</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">1600 DPI</p>
+                </div>
+              </div>
+
+              <!-- Camera Sensitivity -->
+              <div class="spec-row flex items-center border-b border-border">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">Camera Sens</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">24</p>
+                  <p class="text-[10px] text-muted mt-0.5">Standard View Movement Sensitivity</p>
+                </div>
+              </div>
+
+              <!-- Firing Sensitivity -->
+              <div class="spec-row flex items-center">
+                <div class="w-1/3 sm:w-1/4 px-5 py-4">
+                  <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium">Firing Sens</p>
+                </div>
+                <div class="w-2/3 sm:w-3/4 px-5 py-4 border-l border-border">
+                  <p class="text-sm font-semibold tracking-tight">30</p>
+                  <p class="text-[10px] text-muted mt-0.5">Shooting & Recoil Control Sensitivity</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DIVIDER ===== -->
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 pb-12">
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- ===== PEAK RANKS SHOWCASE ===== -->
+    <section id="ranks" class="pb-20">
+      <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
+        <!-- Section Header -->
+        <div class="mb-10">
+          <p class="text-[10px] tracking-[0.2em] uppercase text-muted font-medium mb-2">Achievements</p>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Peak Gaming Ranks</h2>
+        </div>
+
+        <!-- Ranks Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-[1px] bg-border border border-border">
+          
+          <!-- Rank Item 1: MLBB -->
+          <div class="bg-white p-6 flex flex-col items-center justify-center text-center group rank-card">
+            <div class="text-2xl font-black tracking-tighter text-black mb-3">68★</div>
+            <p class="text-[9px] tracking-[0.15em] uppercase text-muted font-medium mb-1">MLBB</p>
+            <h3 class="text-xs font-semibold tracking-tight">Mythical Glory</h3>
+            <p class="text-[10px] text-muted mt-0.5">68 Stars</p>
+          </div>
+
+          <!-- Rank Item 2: Valorant -->
+          <div class="bg-white p-6 flex flex-col items-center justify-center text-center group rank-card">
+            <div class="text-2xl font-black tracking-tighter text-black mb-3">A3</div>
+            <p class="text-[9px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Valorant</p>
+            <h3 class="text-xs font-semibold tracking-tight">Ascendant 3</h3>
+            <p class="text-[10px] text-muted mt-0.5">Peak Rating</p>
+          </div>
+
+          <!-- Rank Item 3: CS:GO -->
+          <div class="bg-white p-6 flex flex-col items-center justify-center text-center group rank-card">
+            <div class="text-2xl font-black tracking-tighter text-black mb-3">SMFC</div>
+            <p class="text-[9px] tracking-[0.15em] uppercase text-muted font-medium mb-1">CS:GO</p>
+            <h3 class="text-xs font-semibold tracking-tight">SMFC</h3>
+            <p class="text-[10px] text-muted mt-0.5">Supreme Master First Class</p>
+          </div>
+
+          <!-- Rank Item 4: Faceit -->
+          <div class="bg-white p-6 flex flex-col items-center justify-center text-center group rank-card">
+            <div class="text-2xl font-black tracking-tighter text-black mb-3">1700</div>
+            <p class="text-[9px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Faceit</p>
+            <h3 class="text-xs font-semibold tracking-tight">Level 8</h3>
+            <p class="text-[10px] text-muted mt-0.5">1700 ELO Rating</p>
+          </div>
+
+          <!-- Rank Item 5: CS 2 -->
+          <div class="bg-white p-6 flex flex-col items-center justify-center text-center group rank-card">
+            <div class="text-2xl font-black tracking-tighter text-black mb-3">15K</div>
+            <p class="text-[9px] tracking-[0.15em] uppercase text-muted font-medium mb-1">CS 2</p>
+            <h3 class="text-xs font-semibold tracking-tight">15,000 Rating</h3>
+            <p class="text-[10px] text-muted mt-0.5">Premier Matchmaking</p>
+          </div>
+
+          <!-- Rank Item 6: Bloodstrike -->
+          <div class="bg-white p-6 flex flex-col items-center justify-center text-center group rank-card">
+            <div class="text-2xl font-black tracking-tighter text-black mb-3">MYTH</div>
+            <p class="text-[9px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Bloodstrike</p>
+            <h3 class="text-xs font-semibold tracking-tight">Mythic</h3>
+            <p class="text-[10px] text-muted mt-0.5">Peak Rank</p>
+          </div>
+
+          <!-- Rank Item 7: Apex Legends -->
+          <div class="bg-white p-6 flex flex-col items-center justify-center text-center group rank-card">
+            <div class="text-2xl font-black tracking-tighter text-black mb-3">D3</div>
+            <p class="text-[9px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Apex Legends</p>
+            <h3 class="text-xs font-semibold tracking-tight">Diamond 3</h3>
+            <p class="text-[10px] text-muted mt-0.5">Peak Division</p>
+          </div>
+
+          <!-- Rank Item 8: Fortnite -->
+          <div class="bg-white p-6 flex flex-col items-center justify-center text-center group rank-card">
+            <div class="text-2xl font-black tracking-tighter text-black mb-3">DIV 8</div>
+            <p class="text-[9px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Fortnite</p>
+            <h3 class="text-xs font-semibold tracking-tight">Champion Division</h3>
+            <p class="text-[10px] text-muted mt-0.5">Division 8</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DIVIDER ===== -->
+    <div class="max-w-[1400px] mx-auto px-6 lg:px-10 pb-12">
+      <div class="section-divider"></div>
+    </div>
+
+    <!-- ===== CONTACT / FOOTER ===== -->
+    <footer id="contact" class="pb-10">
+      <div class="max-w-[800px] mx-auto px-6 lg:px-10">
+        <!-- Contact CTA -->
+        <div class="text-center mb-16">
+          <p class="text-[10px] tracking-[0.2em] uppercase text-muted font-medium mb-2">Get in Touch</p>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight mb-4">Let's Work Together</h2>
+          <p class="text-sm text-muted max-w-md mx-auto leading-relaxed mb-8">
+            Open for design collaborations, gaming content partnerships, and music projects. Reach out directly on Discord.
+          </p>
+          <a href="https://discord.com/users/634024969600368640" target="_blank" rel="noopener noreferrer" id="contact-discord" class="link-btn inline-block border border-black py-3.5 px-10 text-xs tracking-[0.12em] uppercase font-semibold">
+            Discord DM
+          </a>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="border-t border-border pt-8">
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-[10px] tracking-[0.1em] uppercase text-muted font-medium">
+              © 2026 Juki Akira. All rights reserved.
+            </p>
+            <div class="flex items-center gap-6">
+              <a href="#" class="text-[10px] tracking-[0.1em] uppercase text-muted font-medium hover:text-black transition-colors">Instagram</a>
+              <a href="#" class="text-[10px] tracking-[0.1em] uppercase text-muted font-medium hover:text-black transition-colors">Twitter</a>
+              <a href="#" class="text-[10px] tracking-[0.1em] uppercase text-muted font-medium hover:text-black transition-colors">YouTube</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      // ===== MOBILE MENU TOGGLE =====
+      const menuToggle = document.getElementById('mobile-menu-toggle');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuLine1 = document.getElementById('menu-line-1');
+      const menuLine2 = document.getElementById('menu-line-2');
+      const menuLine3 = document.getElementById('menu-line-3');
+      let menuOpen = false;
+
+      menuToggle.addEventListener('click', () => {
+        menuOpen = !menuOpen;
+        mobileMenu.classList.toggle('open', menuOpen);
+
+        if (menuOpen) {
+          menuLine1.style.transform = 'rotate(45deg) translateY(3.5px)';
+          menuLine2.style.opacity = '0';
+          menuLine3.style.transform = 'rotate(-45deg) translateY(-3.5px)';
+        } else {
+          menuLine1.style.transform = '';
+          menuLine2.style.opacity = '';
+          menuLine3.style.transform = '';
+        }
+      });
+
+      // Close mobile menu on nav link click
+      document.querySelectorAll('.mobile-nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+          menuOpen = false;
+          mobileMenu.classList.remove('open');
+          menuLine1.style.transform = '';
+          menuLine2.style.opacity = '';
+          menuLine3.style.transform = '';
+        });
+      });
+
+      // ===== SCROLL-BASED ANIMATIONS (Intersection Observer) =====
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -40px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-fade-in-up');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.gear-card, .spec-row, .rank-card').forEach(el => {
+        el.style.opacity = '0';
+        observer.observe(el);
+      });
+
+      // ===== GAME SETTINGS TAB SWITCHER =====
+      const tabButtons = document.querySelectorAll('.game-tab-btn');
+      const settingsTables = document.querySelectorAll('.game-settings-table');
+
+      tabButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetTab = btn.getAttribute('data-game-tab');
+
+          // Update buttons styling
+          tabButtons.forEach(b => {
+            if (b === btn) {
+              b.classList.remove('border-transparent', 'text-muted');
+              b.classList.add('border-black');
+            } else {
+              b.classList.remove('border-black');
+              b.classList.add('border-transparent', 'text-muted');
+            }
+          });
+
+          // Show target table and hide others
+          settingsTables.forEach(table => {
+            if (table.id === `settings-${targetTab}`) {
+              table.classList.remove('hidden');
+            } else {
+              table.classList.add('hidden');
+            }
+          });
+        });
+      });
+
+      // ===== HEADER SHRINK ON SCROLL =====
+      const header = document.getElementById('site-header');
+      let lastScroll = 0;
+
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.scrollY;
+
+        if (currentScroll > 100) {
+          header.classList.add('shadow-sm');
+        } else {
+          header.classList.remove('shadow-sm');
+        }
+
+        lastScroll = currentScroll;
+      }, { passive: true });
+
+      // ===== SMOOTH SCROLL FOR ANCHOR LINKS =====
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', (e) => {
+          const href = anchor.getAttribute('href');
+          if (href === '#') return;
+
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            const headerHeight = header.offsetHeight + 20;
+            const targetPosition = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+            window.scrollTo({
+              top: targetPosition,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+
+      // ===== PARALLAX HERO ON SCROLL =====
+      const heroImage = document.getElementById('hero-image');
+      if (heroImage) {
+        window.addEventListener('scroll', () => {
+          const scrolled = window.scrollY;
+          const rate = scrolled * 0.3;
+          heroImage.style.transform = `translateY(${rate}px)`;
+        }, { passive: true });
+      }
+
+      // ===== FOLLOW MODAL PROMPT =====
+      const followModal = document.getElementById('follow-modal');
+      const modalContent = followModal.querySelector('div');
+      const btnSudah = document.getElementById('modal-btn-sudah');
+      const btnBelum = document.getElementById('modal-btn-belum');
+
+      // Show modal with a short transition delay
+      setTimeout(() => {
+        followModal.classList.remove('opacity-0', 'pointer-events-none');
+        modalContent.classList.remove('scale-95');
+        modalContent.classList.add('scale-100');
+      }, 400);
+
+      function closeModal() {
+        followModal.classList.add('opacity-0', 'pointer-events-none');
+        modalContent.classList.remove('scale-100');
+        modalContent.classList.add('scale-95');
+      }
+
+      btnSudah.addEventListener('click', closeModal);
+      btnBelum.addEventListener('click', closeModal);
+
+    });
+  </script>
+
+  <!-- ===== FOLLOW PROMPT POPUP ===== -->
+  <div id="follow-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300 opacity-0 pointer-events-none">
+    <div class="bg-white border border-black max-w-[90%] w-[400px] p-8 md:p-10 text-center transform scale-95 transition-transform duration-300">
+      <!-- Monogram logo -->
+      <div class="w-12 h-12 bg-black text-white flex items-center justify-center mx-auto mb-6 text-sm font-bold tracking-[0.1em]">
+        JA
+      </div>
+      
+      <!-- Text prompt -->
+      <h2 class="text-sm font-bold tracking-[0.15em] uppercase text-black mb-2">sudah Follow aku belum??</h2>
+      <p class="text-xs text-muted leading-relaxed mb-8">Follow my TikTok for competitive highlights, covers, and updates!</p>
+      
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button id="modal-btn-sudah" class="flex-1 bg-black text-white border border-black py-3.5 text-[10px] tracking-[0.2em] font-bold uppercase transition-all duration-200 hover:bg-white hover:text-black">
+          SUDAH
+        </button>
+        <a href="http://tiktok.com/@jukiakiraa" target="_blank" rel="noopener noreferrer" id="modal-btn-belum" class="flex-1 block border border-black text-black py-3.5 text-[10px] tracking-[0.2em] font-bold uppercase transition-all duration-200 hover:bg-black hover:text-white text-center">
+          BELUM, OTW!
+        </a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
