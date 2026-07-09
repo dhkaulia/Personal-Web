@@ -372,6 +372,18 @@
               <span class="text-xs font-bold tracking-tight uppercase">LIVE (ALMOST) EVERYDAY ON TIKTOK</span>
             </div>
           </div>
+          <a href="https://youtube.com/@jukiiakira/live" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-5 py-4 hover:bg-black hover:text-white transition-colors duration-200 group">
+            <div class="flex flex-col">
+              <span class="text-xs font-black tracking-wider uppercase">YOUTUBE LIVE</span>
+              <span class="text-[9px] text-muted group-hover:text-neutral-400 tracking-[0.2em] uppercase mt-1">@jukiiakira</span>
+            </div>
+            <div class="text-right">
+              <span id="youtube-live-indicator" class="text-xs font-bold tracking-tight uppercase flex items-center gap-1.5 justify-end">
+                <span class="w-1.5 h-1.5 rounded-full bg-neutral-400"></span>
+                CHECKING...
+              </span>
+            </div>
+          </a>
         </div>
       </div>
     </section>
@@ -947,6 +959,45 @@
 
       btnSudah.addEventListener('click', closeModal);
       btnBelum.addEventListener('click', closeModal);
+
+      // ===== YOUTUBE LIVE STATUS CHECKER =====
+      const checkYoutubeLive = async () => {
+        const indicator = document.getElementById('youtube-live-indicator');
+        if (!indicator) return;
+
+        const youtubeLiveUrl = 'https://www.youtube.com/@jukiiakira/live';
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(youtubeLiveUrl)}`;
+
+        try {
+          const response = await fetch(proxyUrl);
+          if (!response.ok) throw new Error('Network response was not ok');
+          const data = await response.json();
+          const html = data.contents || '';
+
+          // YouTube includes "isLive":true or "LIVE" style definitions in YT initial data when a live stream is active
+          const isLive = html.includes('"isLive":true') || html.includes('"style":"LIVE"') || html.includes('style=\\"LIVE\\"');
+
+          if (isLive) {
+            indicator.innerHTML = `
+              <span class="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse"></span>
+              <span class="text-red-600">LIVE NOW</span>
+            `;
+          } else {
+            indicator.innerHTML = `
+              <span class="w-1.5 h-1.5 rounded-full bg-neutral-400"></span>
+              <span class="text-muted">OFFLINE</span>
+            `;
+          }
+        } catch (error) {
+          console.error('Error checking YouTube Live status:', error);
+          indicator.innerHTML = `
+            <span class="w-1.5 h-1.5 rounded-full bg-neutral-400"></span>
+            <span>VISIT FEED</span>
+          `;
+        }
+      };
+
+      checkYoutubeLive();
 
     });
   </script>
