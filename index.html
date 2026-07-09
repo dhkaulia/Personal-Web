@@ -1004,8 +1004,8 @@
         const heroBadge = document.getElementById('hero-live-badge');
         const heroStatusText = document.getElementById('hero-live-status-text');
 
-        const youtubeLiveUrl = 'https://www.youtube.com/@jukiiakira/live';
-        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(youtubeLiveUrl)}`;
+        const youtubeLiveUrl = `https://www.youtube.com/@jukiiakira/live?t=${Date.now()}`;
+        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(youtubeLiveUrl)}&t=${Date.now()}`;
 
         try {
           const response = await fetch(proxyUrl);
