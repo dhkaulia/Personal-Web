@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>JUKI AKIRA — Design · Gaming · Music</title>
-  <meta name="description" content="Juki Akira's personal profile hub — a centralized digital identity for design, gaming, and music. Explore the current setup, visit the Yakshop store, and discover creative projects.">
+  <meta name="description" content="Juki Akira's personal profile hub — a centralized digital identity for design, gaming, and music. Explore the setup, stream schedules, and creative projects.">
   <meta property="og:title" content="JUKI AKIRA — Design · Gaming · Music">
   <meta property="og:description" content="A premium digital identity hub. Design, gaming peripherals, music, and more.">
   <meta property="og:type" content="website">
@@ -203,7 +203,7 @@
       <div class="marquee-track flex items-center whitespace-nowrap">
         <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Competitive Gaming · Streaming · VTuber</span>
         <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">✦</span>
-        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Yakshop — Now Open</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Live on TikTok</span>
         <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">✦</span>
         <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Current Setup — Season 2026</span>
         <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">✦</span>
@@ -212,7 +212,7 @@
         <!-- Duplicate for seamless loop -->
         <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Competitive Gaming · Streaming · VTuber</span>
         <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">✦</span>
-        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Yakshop — Now Open</span>
+        <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Live on TikTok</span>
         <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">✦</span>
         <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">Current Setup — Season 2026</span>
         <span class="text-[10px] tracking-[0.2em] uppercase font-medium px-8">✦</span>
@@ -232,9 +232,9 @@
           <span class="hidden sm:inline text-[10px] tracking-[0.1em] uppercase text-muted font-medium">/ Juki Akira</span>
         </a>
 
-        <!-- Desktop Navigation -->
+         <!-- Desktop Navigation -->
         <nav id="desktop-nav" class="hidden md:flex items-center gap-8">
-          <a href="#setup" class="nav-link text-[11px] tracking-[0.15em] uppercase font-medium">Setup</a>
+          <a href="#setup" class="nav-link text-[11px] tracking-[0.15em] uppercase font-medium">Gallery</a>
           <a href="#specs" class="nav-link text-[11px] tracking-[0.15em] uppercase font-medium">Specs</a>
           <a href="#links" class="nav-link text-[11px] tracking-[0.15em] uppercase font-medium">Links</a>
           <a href="#contact" class="nav-link text-[11px] tracking-[0.15em] uppercase font-medium">Contact</a>
@@ -252,7 +252,7 @@
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="mobile-menu absolute top-full left-0 right-0 bg-white border-b border-border md:hidden z-40">
       <div class="px-6 py-8 flex flex-col gap-6">
-        <a href="#setup" class="text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link">Setup</a>
+        <a href="#setup" class="text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link">Gallery</a>
         <a href="#specs" class="text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link">Specs</a>
         <a href="#links" class="text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link">Links</a>
         <a href="#contact" class="text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link">Contact</a>
@@ -397,7 +397,7 @@
         </div>
 
         <!-- Schedule Table -->
-        <div class="border border-black bg-white divide-y divide-black animate-fade-in-up">
+        <div class="border border-black bg-white animate-fade-in-up">
           <div class="flex items-center justify-between px-5 py-4">
             <div class="flex flex-col">
               <span class="text-xs font-black tracking-wider uppercase">MON - SUN</span>
@@ -407,18 +407,35 @@
               <span class="text-xs font-bold tracking-tight uppercase">LIVE (ALMOST) EVERYDAY ON TIKTOK</span>
             </div>
           </div>
-          <a href="https://youtube.com/@jukiiakira/live" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between px-5 py-4 hover:bg-black hover:text-white transition-colors duration-200 group">
-            <div class="flex flex-col">
-              <span class="text-xs font-black tracking-wider uppercase">YOUTUBE LIVE</span>
-              <span class="text-[9px] text-muted group-hover:text-neutral-400 tracking-[0.2em] uppercase mt-1">@jukiiakira</span>
+        </div>
+
+        <!-- Social Follow Counters -->
+        <div class="mt-3 border border-black bg-white divide-y divide-black animate-fade-in-up">
+
+          <!-- YouTube Row -->
+          <div class="flex items-center justify-between px-5 py-4 gap-4">
+            <div class="flex flex-col flex-1">
+              <span class="text-[9px] tracking-[0.2em] uppercase text-muted font-medium">YouTube</span>
+              <span id="yt-sub-count" class="text-xs font-black tracking-wider uppercase mt-0.5">— Subscribers</span>
             </div>
-            <div class="text-right">
-              <span id="youtube-live-indicator" class="text-xs font-bold tracking-tight uppercase flex items-center gap-1.5 justify-end">
-                <span class="w-1.5 h-1.5 rounded-full bg-neutral-400"></span>
-                CHECKING...
-              </span>
+            <a href="https://youtube.com/@jukiiakira?sub_confirmation=1" target="_blank" rel="noopener noreferrer"
+               class="link-btn flex-shrink-0 border border-black px-4 py-2 text-[9px] tracking-[0.2em] font-bold uppercase whitespace-nowrap">
+              Subscribe ↗
+            </a>
+          </div>
+
+          <!-- TikTok Row -->
+          <div class="flex items-center justify-between px-5 py-4 gap-4">
+            <div class="flex flex-col flex-1">
+              <span class="text-[9px] tracking-[0.2em] uppercase text-muted font-medium">TikTok</span>
+              <span id="tt-follower-count" class="text-xs font-black tracking-wider uppercase mt-0.5">— Followers</span>
             </div>
-          </a>
+            <a href="https://tiktok.com/@jukiakiraa" target="_blank" rel="noopener noreferrer"
+               class="link-btn flex-shrink-0 border border-black px-4 py-2 text-[9px] tracking-[0.2em] font-bold uppercase whitespace-nowrap">
+              Follow ↗
+            </a>
+          </div>
+
         </div>
       </div>
     </section>
@@ -428,84 +445,84 @@
       <div class="section-divider"></div>
     </div>
 
-    <!-- ===== CURRENT SETUP — GEAR SHOWCASE ===== -->
-    <section id="setup" class="pb-16">
+    <!-- ===== DIGITAL ART GALLERY ===== -->
+    <section id="setup" class="pb-16 animate-fade-in-up">
       <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
         <!-- Section Header -->
         <div class="flex items-end justify-between mb-10">
           <div>
-            <p class="text-[10px] tracking-[0.2em] uppercase text-muted font-medium mb-2">Current Setup</p>
-            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Season 2026</h2>
+            <p class="text-[10px] tracking-[0.2em] uppercase text-muted font-medium mb-2">Portfolio</p>
+            <h2 class="text-2xl sm:text-3xl font-bold tracking-tight">Digital Art Gallery</h2>
           </div>
-          <p class="hidden sm:block text-[10px] tracking-[0.15em] uppercase text-muted font-medium">4 Items</p>
+          <p class="hidden sm:block text-[10px] tracking-[0.15em] uppercase text-muted font-medium">4 Artworks</p>
         </div>
 
-        <!-- Product Grid — E-commerce "New Releases" Style -->
+        <!-- Gallery Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-[1px] bg-border">
 
-          <!-- Gear Item 1: BenQ GW2791 -->
-          <article class="gear-card bg-white cursor-pointer group" id="gear-monitor">
+          <!-- Art Item 1 -->
+          <a href="assets/images/art-pikazo-01.webp" target="_blank" rel="noopener noreferrer" class="gear-card bg-white cursor-pointer group" id="art-pikazo-01">
             <div class="overflow-hidden aspect-square bg-[#fafafa]">
               <img
-                src="assets/images/benq-gw2791.webp"
-                alt="BenQ GW2791 27-inch Monitor"
-                class="w-full h-full object-cover"
+                src="assets/images/art-pikazo-01.webp"
+                alt="Neon Genesis Mika Pikazo Style Artwork"
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 loading="lazy"
               >
             </div>
             <div class="p-4 border-t border-border">
-              <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Primary Display</p>
-              <h3 class="gear-label text-sm font-semibold tracking-tight">BenQ GW2791</h3>
+              <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Aesthetic Illustration</p>
+              <h3 class="gear-label text-sm font-semibold tracking-tight">Neon Genesis</h3>
             </div>
-          </article>
+          </a>
 
-          <!-- Gear Item 2: Pressplay Essentials 75 -->
-          <article class="gear-card bg-white cursor-pointer group" id="gear-keyboard">
+          <!-- Art Item 2 -->
+          <a href="assets/images/art-pikazo-02.webp" target="_blank" rel="noopener noreferrer" class="gear-card bg-white cursor-pointer group" id="art-pikazo-02">
             <div class="overflow-hidden aspect-square bg-[#fafafa]">
               <img
-                src="assets/images/pressplay-essentials-75.webp"
-                alt="Pressplay Essentials 75 Mechanical Keyboard"
-                class="w-full h-full object-cover"
+                src="assets/images/art-pikazo-02.webp"
+                alt="Cyberpunk Shogun Artwork"
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 loading="lazy"
               >
             </div>
             <div class="p-4 border-t border-border">
-              <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Keyboard</p>
-              <h3 class="gear-label text-sm font-semibold tracking-tight">Pressplay Essentials 75</h3>
+              <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Streetwear Anime</p>
+              <h3 class="gear-label text-sm font-semibold tracking-tight">Cyberpunk Shogun</h3>
             </div>
-          </article>
+          </a>
 
-          <!-- Gear Item 3: ATK R1 Pro -->
-          <article class="gear-card bg-white cursor-pointer group" id="gear-mouse">
+          <!-- Art Item 3 -->
+          <a href="assets/images/art-cinema-01.webp" target="_blank" rel="noopener noreferrer" class="gear-card bg-white cursor-pointer group" id="art-cinema-01">
             <div class="overflow-hidden aspect-square bg-[#fafafa]">
               <img
-                src="assets/images/atk-r1-pro.webp"
-                alt="ATK R1 Pro Gaming Mouse"
-                class="w-full h-full object-cover"
+                src="assets/images/art-cinema-01.webp"
+                alt="Neo Tokyo 2099 Sci-Fi Cityscape"
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 loading="lazy"
               >
             </div>
             <div class="p-4 border-t border-border">
-              <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Mouse</p>
-              <h3 class="gear-label text-sm font-semibold tracking-tight">ATK R1 Pro</h3>
+              <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Cinematic Concept Art</p>
+              <h3 class="gear-label text-sm font-semibold tracking-tight">Neo Tokyo 2099</h3>
             </div>
-          </article>
+          </a>
 
-          <!-- Gear Item 4: KANSHA by Tenjin Scrollworks -->
-          <article class="gear-card bg-white cursor-pointer group" id="gear-deskmat">
+          <!-- Art Item 4 -->
+          <a href="assets/images/art-cinema-02.webp" target="_blank" rel="noopener noreferrer" class="gear-card bg-white cursor-pointer group" id="art-cinema-02">
             <div class="overflow-hidden aspect-square bg-[#fafafa]">
               <img
-                src="assets/images/tenjin-kansha.webp"
-                alt="KANSHA by Tenjin Scrollworks Deskmat"
-                class="w-full h-full object-cover"
+                src="assets/images/art-cinema-02.webp"
+                alt="Celestial Wanderer Cybernetic Astronaut"
+                class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 loading="lazy"
               >
             </div>
             <div class="p-4 border-t border-border">
-              <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Deskmat</p>
-              <h3 class="gear-label text-sm font-semibold tracking-tight">KANSHA by Tenjin Scrollworks</h3>
+              <p class="text-[10px] tracking-[0.15em] uppercase text-muted font-medium mb-1">Vivid Cybernetic Art</p>
+              <h3 class="gear-label text-sm font-semibold tracking-tight">Celestial Wanderer</h3>
             </div>
-          </article>
+          </a>
 
         </div>
       </div>
@@ -1123,6 +1140,59 @@
       };
 
       updateVisitCounter();
+
+      // ===== YOUTUBE SUBSCRIBER COUNT =====
+      const fetchYouTubeSubs = async () => {
+        const el = document.getElementById('yt-sub-count');
+        if (!el) return;
+        const channelUrl = 'https://www.youtube.com/@jukiiakira';
+        try {
+          const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(channelUrl)}`);
+          if (!res.ok) throw new Error();
+          const html = await res.text();
+          // YouTube embeds subscriber count in meta tags and ld+json
+          const match = html.match(/"subscriberCountText"\s*:\s*\{[^}]*"simpleText"\s*:\s*"([^"]+)"/)
+                     || html.match(/(\d[\d,.KMB]+) subscribers/i);
+          if (match) {
+            el.innerText = `${match[1]} Subscribers`;
+          } else {
+            el.innerText = 'See Subscribers ↗';
+          }
+        } catch {
+          el.innerText = 'See Subscribers ↗';
+        }
+      };
+
+      // ===== TIKTOK FOLLOWER COUNT =====
+      const fetchTikTokFollowers = async () => {
+        const el = document.getElementById('tt-follower-count');
+        if (!el) return;
+        const tiktokUrl = 'https://www.tiktok.com/@jukiakiraa';
+        try {
+          const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(tiktokUrl)}`);
+          if (!res.ok) throw new Error();
+          const html = await res.text();
+          // TikTok embeds follower count in SIGI_STATE or meta tags
+          const match = html.match(/"followerCount"\s*:\s*(\d+)/)
+                     || html.match(/"fans"\s*:\s*(\d+)/);
+          if (match) {
+            const num = parseInt(match[1]);
+            const fmt = num >= 1000000
+              ? `${(num / 1000000).toFixed(1)}M`
+              : num >= 1000
+              ? `${(num / 1000).toFixed(1)}K`
+              : num.toLocaleString();
+            el.innerText = `${fmt} Followers`;
+          } else {
+            el.innerText = 'See Followers ↗';
+          }
+        } catch {
+          el.innerText = 'See Followers ↗';
+        }
+      };
+
+      fetchYouTubeSubs();
+      fetchTikTokFollowers();
 
     });
   </script>
