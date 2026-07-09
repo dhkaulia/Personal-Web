@@ -319,6 +319,41 @@
       </div>
     </section>
 
+    <!-- ===== LIVE BROADCAST STATUS HERO CARD ===== -->
+    <section id="live-hero" class="pt-6 pb-2 animate-fade-in-up">
+      <div class="max-w-[520px] mx-auto px-6">
+        <a href="https://youtube.com/@jukiiakira/live" target="_blank" rel="noopener noreferrer" class="block border border-black bg-white p-6 hover:bg-black hover:text-white transition-colors duration-300 group">
+          <div class="flex items-center justify-between mb-4">
+            <!-- Left Info: Title & Monogram -->
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 bg-black text-white group-hover:bg-white group-hover:text-black transition-colors duration-300 flex items-center justify-center text-xs font-black tracking-wider">
+                YT
+              </div>
+              <div>
+                <h3 class="text-xs font-black tracking-wider uppercase">Juki Akira Live Feed</h3>
+                <p class="text-[9px] text-muted group-hover:text-neutral-400 tracking-[0.15em] uppercase mt-0.5">YOUTUBE STREAM</p>
+              </div>
+            </div>
+            <!-- Right Info: Badge -->
+            <span id="hero-live-badge" class="inline-flex items-center gap-1.5 px-2.5 py-1 border border-black group-hover:border-white text-[9px] font-black tracking-widest uppercase">
+              <span class="w-1.5 h-1.5 rounded-full bg-neutral-400"></span>
+              CHECKING
+            </span>
+          </div>
+          
+          <!-- Text Body & CTA -->
+          <div class="border-t border-dashed border-neutral-300 group-hover:border-neutral-700 pt-4 flex items-center justify-between">
+            <p id="hero-live-status-text" class="text-xs font-semibold tracking-tight text-muted group-hover:text-neutral-300">
+              Checking broadcast status...
+            </p>
+            <span class="text-[10px] font-black tracking-widest uppercase flex items-center gap-1">
+              ENTER FEED ➜
+            </span>
+          </div>
+        </a>
+      </div>
+    </section>
+
     <!-- ===== LINK DIRECTORY ===== -->
     <section id="links" class="py-6">
       <div class="max-w-[520px] mx-auto px-6">
@@ -963,7 +998,8 @@
       // ===== YOUTUBE LIVE STATUS CHECKER =====
       const checkYoutubeLive = async () => {
         const indicator = document.getElementById('youtube-live-indicator');
-        if (!indicator) return;
+        const heroBadge = document.getElementById('hero-live-badge');
+        const heroStatusText = document.getElementById('hero-live-status-text');
 
         const youtubeLiveUrl = 'https://www.youtube.com/@jukiiakira/live';
         const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(youtubeLiveUrl)}`;
@@ -978,22 +1014,50 @@
           const isLive = html.includes('"isLive":true') || html.includes('"style":"LIVE"') || html.includes('style=\\"LIVE\\"');
 
           if (isLive) {
-            indicator.innerHTML = `
+            const liveBadgeHtml = `
               <span class="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse"></span>
               <span class="text-red-600">LIVE NOW</span>
             `;
+            if (indicator) indicator.innerHTML = liveBadgeHtml;
+            if (heroBadge) {
+              heroBadge.innerHTML = liveBadgeHtml;
+              heroBadge.classList.add('border-red-600');
+            }
+            if (heroStatusText) {
+              heroStatusText.innerText = 'WE ARE CURRENTLY BROADCASTING! CLICK TO JOIN.';
+              heroStatusText.classList.remove('text-muted');
+              heroStatusText.classList.add('text-red-600', 'font-bold');
+            }
           } else {
-            indicator.innerHTML = `
+            const offlineBadgeHtml = `
               <span class="w-1.5 h-1.5 rounded-full bg-neutral-400"></span>
               <span class="text-muted">OFFLINE</span>
             `;
+            if (indicator) indicator.innerHTML = offlineBadgeHtml;
+            if (heroBadge) {
+              heroBadge.innerHTML = offlineBadgeHtml;
+              heroBadge.classList.remove('border-red-600');
+            }
+            if (heroStatusText) {
+              heroStatusText.innerText = 'Stream is currently offline. Check back later!';
+              heroStatusText.classList.add('text-muted');
+              heroStatusText.classList.remove('text-red-600', 'font-bold');
+            }
           }
         } catch (error) {
           console.error('Error checking YouTube Live status:', error);
-          indicator.innerHTML = `
+          const fallbackBadgeHtml = `
             <span class="w-1.5 h-1.5 rounded-full bg-neutral-400"></span>
             <span>VISIT FEED</span>
           `;
+          if (indicator) indicator.innerHTML = fallbackBadgeHtml;
+          if (heroBadge) {
+            heroBadge.innerHTML = fallbackBadgeHtml;
+            heroBadge.classList.remove('border-red-600');
+          }
+          if (heroStatusText) {
+            heroStatusText.innerText = 'Broadcast status unknown. Click to visit channel.';
+          }
         }
       };
 
