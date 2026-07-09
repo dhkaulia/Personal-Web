@@ -829,6 +829,9 @@
             <p class="text-[10px] tracking-[0.1em] uppercase text-muted font-medium">
               © 2026 Juki Akira. All rights reserved.
             </p>
+            <div class="text-[10px] tracking-[0.15em] uppercase text-muted font-semibold" id="visit-counter">
+              VIEWS: 000000
+            </div>
             <div class="flex items-center gap-6">
               <a href="#" class="text-[10px] tracking-[0.1em] uppercase text-muted font-medium hover:text-black transition-colors">Instagram</a>
               <a href="#" class="text-[10px] tracking-[0.1em] uppercase text-muted font-medium hover:text-black transition-colors">Twitter</a>
@@ -1062,6 +1065,32 @@
       };
 
       checkYoutubeLive();
+
+      // ===== VISIT COUNTER =====
+      const updateVisitCounter = async () => {
+        const counterEl = document.getElementById('visit-counter');
+        if (!counterEl) return;
+
+        // Custom namespace & key for community CountAPI (mileshilliard.com)
+        const key = 'jukiakira_portfolio_visits';
+        const url = `https://countapi.mileshilliard.com/api/v1/hit/${key}`;
+
+        try {
+          const response = await fetch(url);
+          if (!response.ok) throw new Error('Counter response error');
+          const data = await response.json();
+          const count = data.value;
+          
+          // Pad number with leading zeroes for streetwear catalog vibe (e.g. 000142)
+          const paddedCount = String(count).padStart(6, '0');
+          counterEl.innerText = `VIEWS: ${paddedCount}`;
+        } catch (error) {
+          console.error('Error fetching visit count:', error);
+          counterEl.innerText = 'VIEWS: OFFLINE';
+        }
+      };
+
+      updateVisitCounter();
 
     });
   </script>
