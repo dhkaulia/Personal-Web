@@ -1005,13 +1005,45 @@
         const heroStatusText = document.getElementById('hero-live-status-text');
 
         const youtubeLiveUrl = `https://www.youtube.com/@jukiiakira/live?t=${Date.now()}`;
-        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(youtubeLiveUrl)}&t=${Date.now()}`;
+        
+        const fetchHtmlThroughProxy = async (targetUrl) => {
+          // 1. Try corsproxy.io (returns raw text directly, fast and reliable)
+          try {
+            const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(targetUrl)}`);
+            if (res.ok) {
+              const text = await res.text();
+              if (text && text.length > 500) return text;
+            }
+          } catch (e) {
+            console.warn('corsproxy.io failed, trying allorigins...', e);
+          }
+
+          // 2. Try allorigins (JSON response wrapper)
+          try {
+            const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}&t=${Date.now()}`);
+            if (res.ok) {
+              const data = await res.json();
+              if (data && data.contents) return data.contents;
+            }
+          } catch (e) {
+            console.warn('allorigins failed, trying codetabs...', e);
+          }
+
+          // 3. Try codetabs (direct text response)
+          try {
+            const res = await fetch(`https://api.codetabs.com/v1/proxy?url=${encodeURIComponent(targetUrl)}`);
+            if (res.ok) {
+              return await res.text();
+            }
+          } catch (e) {
+            console.warn('codetabs failed', e);
+          }
+
+          throw new Error('All CORS proxies failed');
+        };
 
         try {
-          const response = await fetch(proxyUrl);
-          if (!response.ok) throw new Error('Network response was not ok');
-          const data = await response.json();
-          const html = data.contents || '';
+          const html = await fetchHtmlThroughProxy(youtubeLiveUrl);
 
           // YouTube includes "isLive":true or "LIVE" style definitions in YT initial data when a live stream is active
           const isLive = html.includes('"isLive":true') || html.includes('"style":"LIVE"') || html.includes('style=\\"LIVE\\"');
