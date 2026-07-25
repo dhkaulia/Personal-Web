@@ -96,14 +96,55 @@
       transform: scale(1.05);
     }
 
-    /* ===== LINK BUTTON INVERSION ===== */
+    /* ===== GLASSMORPHISM & AMBIENT GLOW ===== */
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-panel:hover {
+      box-shadow: 0 12px 30px -4px rgba(0, 0, 0, 0.12), 0 0 20px rgba(0, 0, 0, 0.04);
+    }
+
+    .avatar-monogram {
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .avatar-monogram:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.35);
+    }
+
+    .social-icon {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(4px);
+    }
+    .social-icon:hover {
+      background-color: #000000 !important;
+      color: #ffffff !important;
+      border-color: #000000 !important;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px -3px rgba(0, 0, 0, 0.25);
+    }
+
+    /* ===== LINK BUTTON INVERSION & LIFT GLOW ===== */
     .link-btn {
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .link-btn:hover {
       background-color: #000000 !important;
       color: #ffffff !important;
       border-color: #000000 !important;
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 12px 28px -5px rgba(0, 0, 0, 0.3), 0 0 16px rgba(0, 0, 0, 0.1);
+    }
+    .link-btn:active {
+      transform: translateY(-1px) scale(0.99);
     }
 
     /* ===== NAV LINK UNDERLINE ANIMATION ===== */
@@ -223,7 +264,7 @@
   </div>
 
   <!-- ===== HEADER / NAVIGATION ===== -->
-  <header id="site-header" class="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-border">
+  <header id="site-header" class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-black/10 shadow-xs transition-all duration-300">
     <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
       <div class="flex items-center justify-between h-14">
         <!-- Logo / Monogram -->
@@ -277,7 +318,7 @@
       <div class="max-w-[800px] mx-auto px-6 lg:px-10 text-center">
         <!-- Avatar / Monogram -->
         <div class="animate-fade-in-up delay-100">
-          <div class="w-20 h-20 mx-auto bg-black text-white flex items-center justify-center text-lg font-bold tracking-[0.1em] mb-6">
+          <div class="w-20 h-20 mx-auto bg-black text-white flex items-center justify-center text-lg font-bold tracking-[0.1em] mb-6 avatar-monogram cursor-pointer">
             JA
           </div>
         </div>
@@ -360,12 +401,12 @@
         </div>
 
         <!-- Schedule Table -->
-        <div class="border border-black bg-white divide-y divide-black animate-fade-in-up">
+        <div class="glass-panel divide-y divide-black/10 animate-fade-in-up">
           <!-- YouTube Random Stream -->
-          <div class="flex items-center justify-between px-5 py-4 gap-4">
+          <div class="flex items-center justify-between px-5 py-4 gap-4 hover:bg-black hover:text-white transition-colors duration-200 group">
             <div class="flex flex-col">
               <span class="text-xs font-black tracking-wider uppercase">MON - SUN</span>
-              <span class="text-[9px] text-muted tracking-[0.2em] uppercase mt-1">10:00 WIB (OR EARLY AS POSSIBLE)</span>
+              <span class="text-[9px] text-muted group-hover:text-neutral-400 tracking-[0.2em] uppercase mt-1">10:00 WIB (OR EARLY AS POSSIBLE)</span>
             </div>
             <div class="text-right">
               <span class="text-xs font-bold tracking-tight uppercase">RANDOM STREAM (MOSTLY MINECRAFT) ON YOUTUBE</span>
@@ -373,10 +414,10 @@
           </div>
 
           <!-- TikTok Stream -->
-          <div class="flex items-center justify-between px-5 py-4 gap-4">
+          <div class="flex items-center justify-between px-5 py-4 gap-4 hover:bg-black hover:text-white transition-colors duration-200 group">
             <div class="flex flex-col">
               <span class="text-xs font-black tracking-wider uppercase">MON - SUN</span>
-              <span class="text-[9px] text-muted tracking-[0.2em] uppercase mt-1">20:00 WIB / 13:00 UTC</span>
+              <span class="text-[9px] text-muted group-hover:text-neutral-400 tracking-[0.2em] uppercase mt-1">20:00 WIB / 13:00 UTC</span>
             </div>
             <div class="text-right">
               <span class="text-xs font-bold tracking-tight uppercase">LIVE (ALMOST) EVERYDAY ON TIKTOK</span>
@@ -384,10 +425,10 @@
           </div>
 
           <!-- Thursday Off Day -->
-          <div class="flex items-center justify-between px-5 py-4 gap-4">
+          <div class="flex items-center justify-between px-5 py-4 gap-4 hover:bg-black hover:text-white transition-colors duration-200 group">
             <div class="flex flex-col">
               <span class="text-xs font-black tracking-wider uppercase">THURSDAY</span>
-              <span class="text-[9px] text-muted tracking-[0.2em] uppercase mt-1">OFF DAY</span>
+              <span class="text-[9px] text-muted group-hover:text-neutral-400 tracking-[0.2em] uppercase mt-1">OFF DAY</span>
             </div>
             <div class="text-right">
               <span class="text-xs font-bold tracking-tight uppercase">HARI KAMIS LIBUR STREAM :P</span>
@@ -417,7 +458,7 @@
             </div>
 
             <!-- Spec Table -->
-            <div class="border border-border">
+            <div class="glass-panel">
               <!-- Machine -->
               <div class="spec-row flex items-center border-b border-border">
                 <div class="w-1/3 sm:w-1/4 px-5 py-4">
@@ -487,7 +528,7 @@
             </div>
 
             <!-- Settings Table (Valorant) -->
-            <div id="settings-valorant" class="game-settings-table border border-border">
+            <div id="settings-valorant" class="game-settings-table glass-panel">
               <!-- Resolution -->
               <div class="spec-row flex items-center border-b border-border">
                 <div class="w-1/3 sm:w-1/4 px-5 py-4">
@@ -544,7 +585,7 @@
             </div>
 
             <!-- Settings Table (Bloodstrike) -->
-            <div id="settings-bloodstrike" class="game-settings-table border border-border hidden">
+            <div id="settings-bloodstrike" class="game-settings-table glass-panel hidden">
               <!-- Resolution -->
               <div class="spec-row flex items-center border-b border-border">
                 <div class="w-1/3 sm:w-1/4 px-5 py-4">
