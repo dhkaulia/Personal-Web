@@ -1,13 +1,5 @@
 [
   {
-    "id": "1",
-    "name": "Keyaru",
-    "games": 4,
-    "tier": "VIP",
-    "status": "playing",
-    "joinedAt": "11:30 WIB"
-  },
-  {
     "id": "2",
     "name": "Freydhite",
     "games": 3,
