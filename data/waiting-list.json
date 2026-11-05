@@ -14,13 +14,5 @@
     "tier": "SVIP",
     "status": "playing",
     "joinedAt": "12:15 WIB"
-  },
-  {
-    "id": "3",
-    "name": "Trytann",
-    "games": 0,
-    "tier": "SVIP",
-    "status": "next",
-    "joinedAt": "13:22 WIB"
   }
 ]

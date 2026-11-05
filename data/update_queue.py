@@ -90,18 +90,29 @@ def set_games(name, games):
 
 def decrement_games(name):
     queue = load_queue()
-    found = False
-    for p in queue:
-        if p["name"].lower() == name.lower():
-            p["games"] = max(0, int(p.get("games", 1)) - 1)
-            found = True
-            print(f"Decremented {name} to {p['games']} Game remaining")
-            if p["games"] == 0:
-                print(f"Notice: {name} has completed all games!")
-            break
-    if not found:
+    target = next((p for p in queue if p["name"].lower() == name.lower()), None)
+    if not target:
         print(f"Player {name} not found in queue.")
         return
+
+    target["games"] = max(0, int(target.get("games", 1)) - 1)
+    print(f"Decremented {name} to {target['games']} Game remaining")
+
+    if target["games"] == 0:
+        print(f"{name} has 0 games left — auto-removing from queue.")
+        queue = [p for p in queue if p["name"].lower() != name.lower()]
+        # Recalculate statuses for the remaining players,
+        # keeping existing PLAYING assignments intact.
+        currently_playing = [p for p in queue if p.get("status") == "playing"]
+        if not currently_playing and queue:
+            queue[0]["status"] = "playing"
+            if len(queue) > 1:
+                queue[1]["status"] = "next"
+        elif currently_playing:
+            bench = [p for p in queue if p.get("status") != "playing"]
+            if bench:
+                bench[0]["status"] = "next"
+
     save_queue(queue)
     list_queue()
 

@@ -160,11 +160,26 @@ async def cmd_dec(ctx, name: str):
         return
 
     existing["games"] = max(0, int(existing.get("games", 1)) - 1)
-    save_queue(queue)
-    msg = f"Sisa {existing['games']} Game"
+
     if existing["games"] == 0:
-        msg += " (Game selesai! Siap di-remove)"
-    embed = create_queue_embed(queue, title=f"Decremented: {name} — {msg}")
+        # Auto-remove and recalculate statuses
+        queue = [p for p in queue if p["name"].lower() != name.lower()]
+        currently_playing = [p for p in queue if p.get("status") == "playing"]
+        if not currently_playing and queue:
+            queue[0]["status"] = "playing"
+            if len(queue) > 1:
+                queue[1]["status"] = "next"
+        elif currently_playing:
+            bench = [p for p in queue if p.get("status") != "playing"]
+            if bench:
+                bench[0]["status"] = "next"
+        save_queue(queue)
+        embed = create_queue_embed(queue, title=f"✅ {name} selesai — otomatis dikeluarkan dari antrean")
+        await ctx.send(embed=embed)
+        return
+
+    save_queue(queue)
+    embed = create_queue_embed(queue, title=f"Decremented: {name} — Sisa {existing['games']} Game")
     await ctx.send(embed=embed)
 
 @bot.command(name="remove", aliases=["rm", "del"])
