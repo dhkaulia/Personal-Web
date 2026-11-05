@@ -4,6 +4,7 @@ CLI utility to manage the Mabar Waiting List in data/waiting-list.json.
 Usage:
     py data/update_queue.py list
     py data/update_queue.py add "Keyaru" 6 "VIP"
+    py data/update_queue.py play "Keyaru" "Freydhite"   <- mark 1+ players as PLAYING
     py data/update_queue.py set "Keyaru" 4
     py data/update_queue.py dec "Keyaru"
     py data/update_queue.py remove "Keyaru"
@@ -104,6 +105,29 @@ def decrement_games(name):
     save_queue(queue)
     list_queue()
 
+def set_playing(names):
+    """Mark one or more players as PLAYING; redistribute next/waiting for the rest."""
+    queue = load_queue()
+    names_lower = [n.lower() for n in names]
+    not_found = [n for n in names if n.lower() not in [p["name"].lower() for p in queue]]
+    if not_found:
+        print(f"Players not found in queue: {', '.join(not_found)}")
+        return
+
+    playing_set = set(names_lower)
+    bench = [p for p in queue if p["name"].lower() not in playing_set]
+
+    for p in queue:
+        if p["name"].lower() in playing_set:
+            p["status"] = "playing"
+        else:
+            idx = bench.index(p)
+            p["status"] = "next" if idx == 0 else "waiting"
+
+    save_queue(queue)
+    print(f"Now PLAYING: {', '.join(names)}")
+    list_queue()
+
 def remove_player(name):
     queue = load_queue()
     initial_len = len(queue)
@@ -127,7 +151,7 @@ def clear_queue():
 def main():
     if len(sys.argv) < 2:
         list_queue()
-        print("Usage: py data/update_queue.py [list | add <name> <games> [tier] | set <name> <games> | dec <name> | remove <name> | clear]")
+        print("Usage: py data/update_queue.py [list | add <name> <games> [tier] | play <name1> [name2 ...] | set <name> <games> | dec <name> | remove <name> | clear]")
         return
 
     cmd = sys.argv[1].lower()
@@ -156,6 +180,11 @@ def main():
             print("Usage: py data/update_queue.py remove <name>")
             return
         remove_player(sys.argv[2])
+    elif cmd in ("play", "playing", "setplaying"):
+        if len(sys.argv) < 3:
+            print("Usage: py data/update_queue.py play <name1> [name2 ...]")
+            return
+        set_playing(sys.argv[2:])
     elif cmd == "clear":
         clear_queue()
     else:

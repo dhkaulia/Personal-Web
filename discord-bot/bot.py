@@ -77,7 +77,13 @@ def create_queue_embed(queue, title="MABAR WAITING LIST"):
 
     lines = []
     for i, p in enumerate(queue, 1):
-        status_icon = "🟢 PLAYING" if i == 1 else ("🟡 NEXT" if i == 2 else "⚪ QUEUE")
+        s = p.get("status", "waiting").lower()
+        if s == "playing":
+            status_icon = "🟢 PLAYING"
+        elif s == "next":
+            status_icon = "🟡 NEXT"
+        else:
+            status_icon = "⚪ QUEUE"
         tier_tag = f"**[{p.get('tier', 'VIP').upper()}]**"
         games = f"{p.get('games', 1)} Game"
         lines.append(f"`#{i:02d}` **{p['name']}** — {games} {tier_tag} · *{status_icon}*")
@@ -170,13 +176,44 @@ async def cmd_remove(ctx, name: str):
         await ctx.send(f"❌ Player `{name}` tidak ditemukan.")
         return
 
-    if queue:
+    # Only reset if no one is currently playing
+    currently_playing = [p for p in queue if p.get("status") == "playing"]
+    if not currently_playing and queue:
         queue[0]["status"] = "playing"
-    if len(queue) > 1:
-        queue[1]["status"] = "next"
+        if len(queue) > 1:
+            queue[1]["status"] = "next"
 
     save_queue(queue)
     embed = create_queue_embed(queue, title=f"Removed: {name} dari antrean")
+    await ctx.send(embed=embed)
+
+@bot.command(name="play", aliases=["playing", "setplaying"])
+async def cmd_play(ctx, *names: str):
+    """Mark one or more players as PLAYING.
+    Usage: !q play Keyaru  OR  !q play Keyaru Freydhite
+    """
+    if not names:
+        await ctx.send("Usage: `!q play <name1> [name2 ...]`")
+        return
+    queue = load_queue()
+    not_found = [n for n in names if not any(p["name"].lower() == n.lower() for p in queue)]
+    if not_found:
+        await ctx.send(f"❌ Tidak ditemukan: {', '.join(not_found)}")
+        return
+
+    playing_set = {n.lower() for n in names}
+    bench = [p for p in queue if p["name"].lower() not in playing_set]
+
+    for p in queue:
+        if p["name"].lower() in playing_set:
+            p["status"] = "playing"
+        else:
+            idx = bench.index(p)
+            p["status"] = "next" if idx == 0 else "waiting"
+
+    save_queue(queue)
+    label = ", ".join(names)
+    embed = create_queue_embed(queue, title=f"Now PLAYING: {label}")
     await ctx.send(embed=embed)
 
 @bot.command(name="clear")

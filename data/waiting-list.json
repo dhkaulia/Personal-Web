@@ -12,7 +12,7 @@
     "name": "Freydhite",
     "games": 3,
     "tier": "SVIP",
-    "status": "waiting",
+    "status": "playing",
     "joinedAt": "12:15 WIB"
   },
   {
@@ -20,7 +20,7 @@
     "name": "Trytann",
     "games": 0,
     "tier": "SVIP",
-    "status": "waiting",
+    "status": "next",
     "joinedAt": "13:22 WIB"
   }
 ]
