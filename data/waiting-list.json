@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "name": "Keyaru",
+    "games": 2,
+    "tier": "VIP",
+    "status": "playing",
+    "joinedAt": "11:30 WIB"
+  },
+  {
+    "id": "2",
+    "name": "Freydhite",
+    "games": 3,
+    "tier": "SVIP",
+    "status": "waiting",
+    "joinedAt": "12:15 WIB"
+  }
+]
