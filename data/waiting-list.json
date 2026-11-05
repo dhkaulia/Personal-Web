@@ -14,5 +14,13 @@
     "tier": "VIP",
     "status": "next",
     "joinedAt": "13:31 WIB"
+  },
+  {
+    "id": "3",
+    "name": "Hess",
+    "games": 99,
+    "tier": "VIP",
+    "status": "waiting",
+    "joinedAt": "18:10 WIB"
   }
 ]
