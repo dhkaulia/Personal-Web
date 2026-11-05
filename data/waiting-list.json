@@ -6,5 +6,13 @@
     "tier": "VIP",
     "status": "playing",
     "joinedAt": "13:31 WIB"
+  },
+  {
+    "id": "2",
+    "name": "Keyaru",
+    "games": 6,
+    "tier": "VIP",
+    "status": "next",
+    "joinedAt": "13:31 WIB"
   }
 ]
