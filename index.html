@@ -234,6 +234,17 @@
     .gear-card:hover .gear-label {
       letter-spacing: 0.05em;
     }
+
+    /* ===== ACCESSIBILITY: KEYBOARD FOCUS (R-32) ===== */
+    :focus-visible {
+      outline: 2px solid #000000;
+      outline-offset: 2px;
+    }
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid #000000;
+      outline-offset: 2px;
+    }
   </style>
 </head>
 <body>
@@ -268,7 +279,7 @@
     <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
       <div class="flex items-center justify-between h-14">
         <!-- Logo / Monogram -->
-        <a href="#" id="logo" class="flex items-center gap-2">
+        <a href="#hero" id="logo" class="flex items-center gap-2">
           <span class="text-sm font-bold tracking-[0.15em] uppercase">JA</span>
           <span class="hidden sm:inline text-[10px] tracking-[0.1em] uppercase text-muted font-medium">/ Juki Akira</span>
         </a>
@@ -292,11 +303,11 @@
 
     <!-- Mobile Menu -->
     <div id="mobile-menu" class="mobile-menu absolute top-full left-0 right-0 bg-white border-b border-border md:hidden z-40">
-      <div class="px-6 py-8 flex flex-col gap-6">
-        <a href="#queue" class="text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link">Queue</a>
-        <a href="#specs" class="text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link">Specs</a>
-        <a href="#links" class="text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link">Links</a>
-        <a href="#contact" class="text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link">Contact</a>
+      <div class="px-6 py-6 flex flex-col gap-1">
+        <a href="#queue" class="py-3 text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link flex items-center min-h-[44px]">Queue</a>
+        <a href="#specs" class="py-3 text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link flex items-center min-h-[44px]">Specs</a>
+        <a href="#links" class="py-3 text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link flex items-center min-h-[44px]">Links</a>
+        <a href="#contact" class="py-3 text-xs tracking-[0.15em] uppercase font-medium mobile-nav-link flex items-center min-h-[44px]">Contact</a>
       </div>
     </div>
   </header>
@@ -435,16 +446,13 @@
         <div class="animate-fade-in-up mb-4">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-2">
-              <span class="relative flex h-2 w-2">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-              </span>
+              <span class="inline-flex rounded-full h-2 w-2 bg-emerald-500" aria-label="Live sync active"></span>
               <p class="text-[10px] tracking-[0.2em] uppercase text-muted font-medium">Mabar Waiting List</p>
             </div>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1.5">
               <span id="queue-last-sync" class="text-[9px] tracking-[0.1em] text-muted uppercase">Syncing...</span>
-              <button id="queue-refresh-btn" class="p-1 text-muted hover:text-black transition-colors" title="Refresh Queue" aria-label="Refresh Queue">
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="queue-refresh-icon" class="transition-transform duration-500"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+              <button id="queue-refresh-btn" class="w-11 h-11 -mr-2.5 inline-flex items-center justify-center text-muted hover:text-black transition-colors rounded-sm" title="Refresh Queue" aria-label="Refresh Queue">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="queue-refresh-icon" class="transition-transform duration-500"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
               </button>
             </div>
           </div>
@@ -937,27 +945,47 @@
         }, { passive: true });
       }
 
-      // ===== FOLLOW MODAL PROMPT =====
+      // ===== FOLLOW MODAL PROMPT (R-26, R-32, antislop-human) =====
       const followModal = document.getElementById('follow-modal');
-      const modalContent = followModal.querySelector('div');
+      const modalContent = followModal ? followModal.querySelector('div') : null;
       const btnSudah = document.getElementById('modal-btn-sudah');
       const btnBelum = document.getElementById('modal-btn-belum');
+      const modalCloseBtn = document.getElementById('modal-close-btn');
 
-      // Show modal with a short transition delay
-      setTimeout(() => {
-        followModal.classList.remove('opacity-0', 'pointer-events-none');
-        modalContent.classList.remove('scale-95');
-        modalContent.classList.add('scale-100');
-      }, 400);
+      if (followModal && modalContent) {
+        // Show modal only if not previously closed in current session
+        const isDismissed = sessionStorage.getItem('ja_modal_dismissed');
+        if (!isDismissed) {
+          setTimeout(() => {
+            followModal.classList.remove('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+          }, 600);
+        }
 
-      function closeModal() {
-        followModal.classList.add('opacity-0', 'pointer-events-none');
-        modalContent.classList.remove('scale-100');
-        modalContent.classList.add('scale-95');
+        function closeModal() {
+          followModal.classList.add('opacity-0', 'pointer-events-none');
+          modalContent.classList.remove('scale-100');
+          modalContent.classList.add('scale-95');
+          sessionStorage.setItem('ja_modal_dismissed', '1');
+        }
+
+        if (btnSudah) btnSudah.addEventListener('click', closeModal);
+        if (btnBelum) btnBelum.addEventListener('click', closeModal);
+        if (modalCloseBtn) modalCloseBtn.addEventListener('click', closeModal);
+
+        // Backdrop click to close (antislop-human)
+        followModal.addEventListener('click', (e) => {
+          if (e.target === followModal) closeModal();
+        });
+
+        // Escape key to close dialog (R-26, R-32)
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && !followModal.classList.contains('pointer-events-none')) {
+            closeModal();
+          }
+        });
       }
-
-      btnSudah.addEventListener('click', closeModal);
-      btnBelum.addEventListener('click', closeModal);
 
       // ===== WAITING LIST / MABAR QUEUE =====
       const queueListEl = document.getElementById('queue-list');
@@ -1103,16 +1131,21 @@
     });
   </script>
 
-  <!-- ===== FOLLOW PROMPT POPUP ===== -->
-  <div id="follow-modal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300 opacity-0 pointer-events-none">
-    <div class="bg-white border border-black max-w-[90%] w-[400px] p-8 md:p-10 text-center transform scale-95 transition-transform duration-300">
+  <!-- ===== FOLLOW PROMPT POPUP (R-26, R-32) ===== -->
+  <div id="follow-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300 opacity-0 pointer-events-none">
+    <div class="bg-white border border-black max-w-[90%] w-[400px] p-8 md:p-10 text-center transform scale-95 transition-transform duration-300 relative shadow-2xl">
+      <!-- Accessible close button -->
+      <button id="modal-close-btn" class="absolute top-2 right-2 w-11 h-11 flex items-center justify-center text-muted hover:text-black transition-colors" aria-label="Close dialog">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+
       <!-- Monogram logo -->
       <div class="w-12 h-12 bg-black text-white flex items-center justify-center mx-auto mb-6 text-sm font-bold tracking-[0.1em]">
         JA
       </div>
       
       <!-- Text prompt -->
-      <h2 class="text-sm font-bold tracking-[0.15em] uppercase text-black mb-2">sudah Follow aku belum??</h2>
+      <h2 id="modal-title" class="text-sm font-bold tracking-[0.15em] uppercase text-black mb-2">sudah Follow aku belum??</h2>
       <p class="text-xs text-muted leading-relaxed mb-8">Follow my TikTok for competitive highlights, covers, and updates!</p>
       
       <!-- Action Buttons -->
