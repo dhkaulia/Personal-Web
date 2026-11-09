@@ -15,3 +15,5 @@ venv/
 Thumbs.db
 
 discord-bot/.env.gist
+
+.env
