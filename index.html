@@ -967,7 +967,7 @@
       const queueRefreshIcon = document.getElementById('queue-refresh-icon');
 
       // The queue data endpoint (can be relative path to data/waiting-list.json or a custom webhook/worker URL)
-      const QUEUE_DATA_URL = window.QUEUE_API_URL || 'https://cdn.jsdelivr.net/gh/dhkaulia/Personal-Web@main/data/waiting-list.json';
+      const QUEUE_DATA_URL = window.QUEUE_API_URL || 'data/waiting-list.json';
 
       async function fetchQueue() {
         if (queueRefreshIcon) {
