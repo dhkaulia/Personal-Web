@@ -14,13 +14,5 @@
     "tier": "VIP",
     "status": "next",
     "joinedAt": "13:31 WIB"
-  },
-  {
-    "id": "3",
-    "name": "TomPearl",
-    "games": 8,
-    "tier": "VIP",
-    "status": "waiting",
-    "joinedAt": "18:33 WIB"
   }
 ]
