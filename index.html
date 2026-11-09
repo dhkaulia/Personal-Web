@@ -975,7 +975,7 @@
         }
         try {
           // Cache bust with timestamp to ensure latest state is fetched
-          const res = await fetch(`${QUEUE_DATA_URL}?_t=${Date.now()}`);
+          const res = await fetch(`${QUEUE_DATA_URL}?_t=${Date.now()}`, { cache: 'no-store' });
           if (!res.ok) throw new Error(`Queue fetch status: ${res.status}`);
           const players = await res.json();
           renderQueue(players);
@@ -1004,8 +1004,8 @@
         queueEmptyEl.classList.add('hidden');
         queueListEl.innerHTML = players.map((p, idx) => {
           const num = String(idx + 1).padStart(2, '0');
-          const isPlaying = idx === 0 || (p.status && p.status.toLowerCase() === 'playing');
-          const isNext = idx === 1 || (p.status && p.status.toLowerCase() === 'next');
+          const isPlaying = p.status && p.status.toLowerCase() === 'playing';
+          const isNext = !isPlaying && p.status && p.status.toLowerCase() === 'next';
           
           let statusBadge = '';
           if (isPlaying) {
