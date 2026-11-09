@@ -39,6 +39,45 @@ GITHUB_REPO    = os.environ.get("GITHUB_REPO", "dhkaulia/Personal-Web")
 JSDELIVR_PURGE = f"https://purge.jsdelivr.net/gh/{GITHUB_REPO}@main/data/waiting-list.json"
 JSDELIVR_URL   = f"https://cdn.jsdelivr.net/gh/{GITHUB_REPO}@main/data/waiting-list.json"
 
+# Load Gist config from discord-bot/.env.gist if present
+_gist_env_path = os.path.join(os.path.dirname(__file__), ".env.gist")
+if os.path.exists(_gist_env_path):
+    for _line in open(_gist_env_path):
+        _k, _, _v = _line.strip().partition("=")
+        if _k and _v:
+            os.environ.setdefault(_k, _v)
+
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
+GIST_ID      = os.environ.get("GIST_ID", "")
+
+def push_to_gist(queue):
+    """Update the public Gist with the latest queue JSON (instant, no deploy lag)."""
+    if not GITHUB_TOKEN or not GIST_ID:
+        return
+    try:
+        payload = json.dumps({
+            "files": {
+                "waiting-list.json": {
+                    "content": json.dumps(queue, indent=2, ensure_ascii=False)
+                }
+            }
+        }).encode()
+        req = urllib.request.Request(
+            f"https://api.github.com/gists/{GIST_ID}",
+            data=payload,
+            headers={
+                "Authorization": f"token {GITHUB_TOKEN}",
+                "Accept": "application/vnd.github+json",
+                "Content-Type": "application/json",
+                "User-Agent": "juki-akira-bot"
+            },
+            method="PATCH"
+        )
+        urllib.request.urlopen(req, timeout=8)
+        print(f"Gist updated: https://gist.github.com/{GIST_ID}")
+    except Exception as e:
+        print(f"Gist update failed (non-critical): {e}")
+
 intents = discord.Intents.default()
 intents.message_content = True
 
@@ -57,7 +96,9 @@ def load_queue():
 def save_queue(queue):
     with open(QUEUE_FILE, "w", encoding="utf-8") as f:
         json.dump(queue, f, indent=2, ensure_ascii=False)
-    
+
+    push_to_gist(queue)
+
     if AUTO_GIT_PUSH:
         try:
             repo_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
