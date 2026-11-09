@@ -4,7 +4,7 @@
     "name": "Freydhite",
     "games": 3,
     "tier": "VIP",
-    "status": "next",
+    "status": "playing",
     "joinedAt": "13:31 WIB"
   },
   {
@@ -12,15 +12,7 @@
     "name": "Keyaru",
     "games": 6,
     "tier": "VIP",
-    "status": "waiting",
+    "status": "next",
     "joinedAt": "13:31 WIB"
-  },
-  {
-    "id": "3",
-    "name": "TomPearl",
-    "games": 8,
-    "tier": "VIP",
-    "status": "playing",
-    "joinedAt": "14:40 WIB"
   }
 ]
