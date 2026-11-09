@@ -17,3 +17,5 @@ Thumbs.db
 discord-bot/.env.gist
 
 .env
+
+.netlify/
