@@ -21,6 +21,7 @@ import os
 import sys
 import json
 import subprocess
+import urllib.request
 from datetime import datetime
 
 try:
@@ -34,6 +35,9 @@ except ImportError:
 TOKEN = os.environ.get("DISCORD_BOT_TOKEN")
 QUEUE_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data", "waiting-list.json"))
 AUTO_GIT_PUSH = os.environ.get("AUTO_GIT_PUSH", "false").lower() in ("true", "1")
+GITHUB_REPO    = os.environ.get("GITHUB_REPO", "dhkaulia/Personal-Web")
+JSDELIVR_PURGE = f"https://purge.jsdelivr.net/gh/{GITHUB_REPO}@main/data/waiting-list.json"
+JSDELIVR_URL   = f"https://cdn.jsdelivr.net/gh/{GITHUB_REPO}@main/data/waiting-list.json"
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -61,6 +65,12 @@ def save_queue(queue):
             subprocess.run(["git", "commit", "-m", "chore: update waiting list via Discord bot"], cwd=repo_dir, check=True)
             subprocess.run(["git", "push"], cwd=repo_dir, check=True)
             print("Auto Git push completed successfully.")
+            # Purge jsDelivr CDN so the website gets fresh data immediately
+            try:
+                urllib.request.urlopen(JSDELIVR_PURGE, timeout=5)
+                print(f"jsDelivr cache purged: {JSDELIVR_PURGE}")
+            except Exception as pe:
+                print(f"jsDelivr purge failed (non-critical): {pe}")
         except Exception as e:
             print(f"Git push failed: {e}")
 
