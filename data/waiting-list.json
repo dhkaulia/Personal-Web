@@ -22,5 +22,13 @@
     "tier": "VIP",
     "status": "waiting",
     "joinedAt": "18:36 WIB"
+  },
+  {
+    "id": "4",
+    "name": "Rinn",
+    "games": 4,
+    "tier": "VIP",
+    "status": "waiting",
+    "joinedAt": "20:29 WIB"
   }
 ]
