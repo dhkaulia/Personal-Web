@@ -1,13 +1,11 @@
 [build]
   publish = "."
+  # Skip Netlify rebuild when only data/waiting-list.json changes —
+  # live updates are handled via GitHub Gist.
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':!data/waiting-list.json'"
 
 [build.processing]
   skip_processing = false
 
 [build.processing.html]
   pretty_urls = true
-
-# Skip Netlify rebuild when only the queue JSON changed —
-# live updates are handled via GitHub Gist instead.
-[build]
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- . ':!data/waiting-list.json'"
