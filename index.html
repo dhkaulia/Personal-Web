@@ -485,7 +485,7 @@
                 <div>
                   <div class="flex items-center gap-2">
                     <span class="text-xs font-black tracking-wider uppercase">Freydhite</span>
-                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold tracking-widest uppercase bg-neutral-200 text-neutral-800">NEXT</span>
+                    <span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold tracking-widest uppercase border border-border text-muted">WAITING</span>
                   </div>
                   <span class="text-[9px] text-muted tracking-wider uppercase mt-0.5 block">Joined 12:15 WIB</span>
                 </div>
@@ -1033,13 +1033,10 @@
         queueListEl.innerHTML = players.map((p, idx) => {
           const num = String(idx + 1).padStart(2, '0');
           const isPlaying = p.status && p.status.toLowerCase() === 'playing';
-          const isNext = !isPlaying && p.status && p.status.toLowerCase() === 'next';
           
           let statusBadge = '';
           if (isPlaying) {
             statusBadge = '<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold tracking-widest uppercase bg-emerald-100 text-emerald-800">PLAYING</span>';
-          } else if (isNext) {
-            statusBadge = '<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold tracking-widest uppercase bg-neutral-200 text-neutral-800">NEXT</span>';
           } else {
             statusBadge = '<span class="inline-flex items-center px-1.5 py-0.5 rounded text-[8px] font-bold tracking-widest uppercase border border-border text-muted">WAITING</span>';
           }

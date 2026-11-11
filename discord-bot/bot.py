@@ -32,6 +32,16 @@ except ImportError:
     print("  pip install discord.py")
     sys.exit(1)
 
+# Load .env from project root if present
+_root_env_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".env"))
+if os.path.exists(_root_env_path):
+    for _line in open(_root_env_path, encoding="utf-8"):
+        _line = _line.strip()
+        if _line and not _line.startswith("#") and "=" in _line:
+            _k, _, _v = _line.partition("=")
+            if _k and _v:
+                os.environ.setdefault(_k.strip(), _v.strip())
+
 TOKEN = os.environ.get("DISCORD_BOT_TOKEN")
 QUEUE_FILE = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "data", "waiting-list.json"))
 AUTO_GIT_PUSH = os.environ.get("AUTO_GIT_PUSH", "false").lower() in ("true", "1")
@@ -129,12 +139,7 @@ def create_queue_embed(queue, title="MABAR WAITING LIST"):
     lines = []
     for i, p in enumerate(queue, 1):
         s = p.get("status", "waiting").lower()
-        if s == "playing":
-            status_icon = "🟢 PLAYING"
-        elif s == "next":
-            status_icon = "🟡 NEXT"
-        else:
-            status_icon = "⚪ QUEUE"
+        status_icon = "🟢 PLAYING" if s == "playing" else "⚪ WAITING"
         tier_tag = f"**[{p.get('tier', 'VIP').upper()}]**"
         games = f"{p.get('games', 1)} Game"
         lines.append(f"`#{i:02d}` **{p['name']}** — {games} {tier_tag} · *{status_icon}*")
@@ -175,7 +180,7 @@ async def cmd_add(ctx, name: str, games: int, tier: str = "VIP"):
         existing["games"] = games
         existing["tier"] = tier
     else:
-        status = "playing" if len(queue) == 0 else ("next" if len(queue) == 1 else "waiting")
+        status = "playing" if len(queue) == 0 else "waiting"
         queue.append({
             "id": str(len(queue) + 1),
             "name": name,
@@ -218,12 +223,9 @@ async def cmd_dec(ctx, name: str):
         currently_playing = [p for p in queue if p.get("status") == "playing"]
         if not currently_playing and queue:
             queue[0]["status"] = "playing"
-            if len(queue) > 1:
-                queue[1]["status"] = "next"
-        elif currently_playing:
-            bench = [p for p in queue if p.get("status") != "playing"]
-            if bench:
-                bench[0]["status"] = "next"
+        for p in queue:
+            if p.get("status") != "playing":
+                p["status"] = "waiting"
         save_queue(queue)
         embed = create_queue_embed(queue, title=f"✅ {name} selesai — otomatis dikeluarkan dari antrean")
         await ctx.send(embed=embed)
@@ -246,8 +248,9 @@ async def cmd_remove(ctx, name: str):
     currently_playing = [p for p in queue if p.get("status") == "playing"]
     if not currently_playing and queue:
         queue[0]["status"] = "playing"
-        if len(queue) > 1:
-            queue[1]["status"] = "next"
+    for p in queue:
+        if p.get("status") != "playing":
+            p["status"] = "waiting"
 
     save_queue(queue)
     embed = create_queue_embed(queue, title=f"Removed: {name} dari antrean")
@@ -268,14 +271,11 @@ async def cmd_play(ctx, *names: str):
         return
 
     playing_set = {n.lower() for n in names}
-    bench = [p for p in queue if p["name"].lower() not in playing_set]
-
     for p in queue:
         if p["name"].lower() in playing_set:
             p["status"] = "playing"
         else:
-            idx = bench.index(p)
-            p["status"] = "next" if idx == 0 else "waiting"
+            p["status"] = "waiting"
 
     save_queue(queue)
     label = ", ".join(names)

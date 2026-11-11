@@ -59,7 +59,7 @@ def add_player(name, games, tier="VIP"):
             list_queue()
             return
             
-    status = "playing" if len(queue) == 0 else ("next" if len(queue) == 1 else "waiting")
+    status = "playing" if len(queue) == 0 else "waiting"
     new_entry = {
         "id": str(len(queue) + 1),
         "name": name,
@@ -106,18 +106,15 @@ def decrement_games(name):
         currently_playing = [p for p in queue if p.get("status") == "playing"]
         if not currently_playing and queue:
             queue[0]["status"] = "playing"
-            if len(queue) > 1:
-                queue[1]["status"] = "next"
-        elif currently_playing:
-            bench = [p for p in queue if p.get("status") != "playing"]
-            if bench:
-                bench[0]["status"] = "next"
+        for p in queue:
+            if p.get("status") != "playing":
+                p["status"] = "waiting"
 
     save_queue(queue)
     list_queue()
 
 def set_playing(names):
-    """Mark one or more players as PLAYING; redistribute next/waiting for the rest."""
+    """Mark one or more players as PLAYING; mark everyone else as waiting."""
     queue = load_queue()
     names_lower = [n.lower() for n in names]
     not_found = [n for n in names if n.lower() not in [p["name"].lower() for p in queue]]
@@ -126,14 +123,11 @@ def set_playing(names):
         return
 
     playing_set = set(names_lower)
-    bench = [p for p in queue if p["name"].lower() not in playing_set]
-
     for p in queue:
         if p["name"].lower() in playing_set:
             p["status"] = "playing"
         else:
-            idx = bench.index(p)
-            p["status"] = "next" if idx == 0 else "waiting"
+            p["status"] = "waiting"
 
     save_queue(queue)
     print(f"Now PLAYING: {', '.join(names)}")
@@ -146,11 +140,13 @@ def remove_player(name):
     if len(queue) == initial_len:
         print(f"Player {name} not found.")
         return
-    # Recalculate status for remaining
-    if queue:
+    # Recalculate status for remaining: ensure at least one player is playing if queue exists
+    currently_playing = [p for p in queue if p.get("status") == "playing"]
+    if not currently_playing and queue:
         queue[0]["status"] = "playing"
-    if len(queue) > 1:
-        queue[1]["status"] = "next"
+    for p in queue:
+        if p.get("status") != "playing":
+            p["status"] = "waiting"
     save_queue(queue)
     print(f"Removed {name} from queue.")
     list_queue()
